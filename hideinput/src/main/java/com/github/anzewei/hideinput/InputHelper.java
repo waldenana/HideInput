@@ -1,11 +1,17 @@
-package com.github.anzewei.hideInput;
+package com.github.anzewei.hideinput;
 
 import android.app.Activity;
 import android.util.Log;
 import android.view.inputmethod.InputMethodManager;
 
 /**
- * Created by 58 on 2016/11/26.
+ * 辅助activity点击EditTextview区域外时隐藏键盘
+ *     使用方法
+ *      protected void onPostCreate(@Nullable Bundle savedInstanceState) {
+ *            super.onPostCreate(savedInstanceState);
+ *            new InputHelper(this).onPostCreate();
+ *     }
+ * @author AnZewei
  */
 
 public class InputHelper {
@@ -25,6 +31,5 @@ public class InputHelper {
 
     void onTouchOutside() {
         inputManager.hideSoftInputFromWindow(mDocView.getWindowToken(), 0);
-        Log.d("ViewTag", "outside");
     }
 }

@@ -1,4 +1,4 @@
-package com.github.anzewei.hideInput;
+package com.github.anzewei.hideinput;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

@@ -1,4 +1,4 @@
-package com.github.anzewei.hideInput;
+package com.github.anzewei.hideinput;
 
 import org.junit.Test;
 

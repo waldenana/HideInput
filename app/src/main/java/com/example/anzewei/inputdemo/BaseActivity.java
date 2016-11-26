@@ -5,7 +5,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 
-import com.github.anzewei.hideInput.InputHelper;
+import com.github.anzewei.hideinput.InputHelper;
 
 /**
  * Created by 58 on 2016/11/26.
