@@ -1,17 +1,17 @@
 package com.example.anzewei.inputdemo;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.anzewei.inputdemo.dummy.DummyContent;
 import com.example.anzewei.inputdemo.dummy.DummyContent.DummyItem;
+import com.github.anzewei.hideinput.InputHelper;
 
 /**
  * A fragment representing a list of Items.
@@ -21,11 +21,22 @@ import com.example.anzewei.inputdemo.dummy.DummyContent.DummyItem;
  */
 public class ItemFragment extends Fragment {
 
-    // TODO: Customize parameter argument names
-    private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
     private int mColumnCount = 1;
-    private OnListFragmentInteractionListener mListener;
+    private OnListFragmentInteractionListener mListener = new OnListFragmentInteractionListener() {
+        @Override
+        public void onListFragmentInteraction(DummyItem item) {
+            PlusOneFragment fragment = new PlusOneFragment();
+            FragmentTransaction transaction = getFragmentManager().beginTransaction();
+            transaction.setCustomAnimations(R.anim.slide_right_in,R.anim.slide_out_left);
+            transaction.replace(R.id.frame,fragment, item.id);
+            transaction.addToBackStack(item.id);
+            transaction.commit();
+        }
+    };
+
+    private RecyclerView mRecyclerView;
+    private SearchView mSearchView;
+    private MyItemRecyclerViewAdapter mRecyclerViewAdapter = new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener);
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -34,42 +45,35 @@ public class ItemFragment extends Fragment {
     public ItemFragment() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static ItemFragment newInstance(int columnCount) {
-        ItemFragment fragment = new ItemFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_COLUMN_COUNT, columnCount);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        if (getArguments() != null) {
-            mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
-        }
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_list, container, false);
-
-        // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
+        mRecyclerView = (RecyclerView) view.findViewById(R.id.list);
+        mSearchView = (SearchView) view.findViewById(R.id.search_view);
+        mSearchView.setIconifiedByDefault(false);
+        mSearchView.onActionViewExpanded();
+        mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
-        }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                mRecyclerViewAdapter.getFilter().filter(newText);
+                return true;
+            }
+        });
+        mRecyclerView.setAdapter(mRecyclerViewAdapter);
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((BaseActivity)getActivity()).getInputHelper().setMode(InputHelper.MODE_BOTTOM);
     }
 
     @Override

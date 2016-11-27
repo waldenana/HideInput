@@ -13,7 +13,7 @@ ext {
     siteUrl = 'https://github.com/anzewei/HideInput'
     gitUrl = 'https://github.com/anzewei/HideInput.git'
 
-    libraryVersion = '1.0'
+    libraryVersion = '1.1'
 
     developerId = 'anzewei'
     developerName = 'An Zewei'

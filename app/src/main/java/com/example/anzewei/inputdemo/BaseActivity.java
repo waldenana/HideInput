@@ -12,11 +12,14 @@ import com.github.anzewei.hideinput.InputHelper;
  */
 
 public class BaseActivity extends AppCompatActivity {
+    private InputHelper mInputHelper;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (!isTaskRoot())
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        mInputHelper = new InputHelper(this);
     }
 
     @Override
@@ -31,6 +34,11 @@ public class BaseActivity extends AppCompatActivity {
     @Override
     protected void onPostCreate(@Nullable Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        new InputHelper(this).onPostCreate();
+        mInputHelper.onPostCreate();
     }
+
+    public InputHelper getInputHelper(){
+        return mInputHelper;
+    }
+
 }

@@ -9,7 +9,7 @@ public class FragmentReplaceActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fragment);
         FragmentTransaction transaction= getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.frame,new PlusOneFragment());
+        transaction.replace(R.id.frame,new ItemFragment());
         transaction.commitAllowingStateLoss();
     }
 

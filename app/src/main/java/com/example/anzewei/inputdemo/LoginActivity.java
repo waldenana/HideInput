@@ -11,6 +11,7 @@ public class LoginActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        getInputHelper().setIgnoreView(R.id.email_sign_in_button);
     }
 }
 

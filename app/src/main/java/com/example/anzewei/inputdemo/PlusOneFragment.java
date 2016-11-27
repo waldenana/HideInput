@@ -3,11 +3,12 @@ package com.example.anzewei.inputdemo;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+
+import com.github.anzewei.hideinput.InputHelper;
 
 /**
  * A fragment with a Google +1 button.
@@ -32,18 +33,12 @@ public class PlusOneFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_plus_one, container, false);
 
-        //Find the +1 button
-        mPlusOneButton = (Button) view.findViewById(R.id.plus_one_button);
-        mPlusOneButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-                FragmentTransaction transaction= getFragmentManager().beginTransaction();
-                transaction.replace(R.id.frame,ItemFragment.newInstance(1));
-                transaction.addToBackStack("sss");
-                transaction.commitAllowingStateLoss();
-            }
-        });
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        ((BaseActivity)getActivity()).getInputHelper().setMode(InputHelper.MODE_TOP);
     }
 }
