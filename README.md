@@ -7,7 +7,7 @@
 - 添加以下代码到 build.gradle
 
 ``` groovy
-compile 'com.github.anzewei:hideinput:1.1'
+compile 'com.github.anzewei.hideinput:hideinput:1.1'
 ``` 
 	
 ## 用法
